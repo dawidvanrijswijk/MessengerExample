@@ -9,7 +9,7 @@ public class ServerThreadService implements Runnable {
     private PrintWriter writer;
     private BufferedReader reader;
 
-    public ServerThreadService(Socket socket) {
+    ServerThreadService(Socket socket) {
         this.socket = socket;
     }
 
@@ -19,12 +19,12 @@ public class ServerThreadService implements Runnable {
             writer = new PrintWriter(socket.getOutputStream());
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             boolean running = true;
-            while (running) {
+            while (true) {
                 String message;
                 if ((message = reader.readLine()) != null) {
                     for (Socket socket : project.server.ChatServer.sockets) {
                         PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
-                        printWriter.println();
+                        printWriter.println(message);
                         printWriter.flush();
                     }
                 }

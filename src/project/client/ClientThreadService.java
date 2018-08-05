@@ -12,13 +12,13 @@ public class ClientThreadService implements Runnable {
     private PrintWriter writer;
     private BufferedReader reader;
 
-    public ClientThreadService(Socket socket) throws IOException {
+    ClientThreadService(Socket socket) throws IOException {
         this.socket = socket;
         writer = new PrintWriter(socket.getOutputStream());
         reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
-    public void sendMessage(String message) {
+    void sendMessage(String message) {
         writer.println(message);
         writer.flush();
     }
@@ -27,16 +27,14 @@ public class ClientThreadService implements Runnable {
     public void run() {
         boolean running = true;
         try {
-            while (running) {
+            while (true) {
                 String message;
                 if ((message = reader.readLine()) != null) {
-                    System.out.println(message);
+                    ClientView.messageTextArea.appendText(message + "\n");
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-
         }
     }
 }

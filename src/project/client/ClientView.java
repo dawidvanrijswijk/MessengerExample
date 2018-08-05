@@ -39,13 +39,13 @@ public class ClientView extends Application {
         TextField messageInput = new TextField();
         messageInput.setOnKeyPressed(b -> {
             if (b.getCode() == KeyCode.ENTER && !messageInput.getText().equals("")) {
-                clientThreadService.sendMessage(messageInput.getText());
+                clientThreadService.sendMessage(textField1.getText() + messageInput.getText());
                 messageInput.clear();
                 messageInput.requestFocus();
             }
         });
-        GridPane gridPane1 = new GridPane();
-        GridPane gridPane2 = new GridPane();
+        GridPane mainGridPane = new GridPane();
+        GridPane loginGridPane = new GridPane();
         messageTextArea = new TextArea();
         userArea = new TextArea();
         Label label1 = new Label();
@@ -58,27 +58,28 @@ public class ClientView extends Application {
             primaryStage.setScene(mainScene);
             messageTextArea.setText(textField1.getText() + " has joined to the chat");
             userArea.setText(textField1.getText());
+
             connect();
         });
-        gridPane1.setPadding(new Insets(5, 5, 5, 5));
-        gridPane1.setHgap(5);
+        mainGridPane.setPadding(new Insets(5, 5, 5, 5));
+        mainGridPane.setHgap(5);
         GridPane.setConstraints(label1, 12, 0);
         GridPane.setConstraints(loginButton, 16, 0);
         GridPane.setConstraints(textField1, 14, 0);
-        gridPane1.getChildren().addAll(loginButton, textField1, label1);
-        loginScene = new Scene(gridPane1, 500, 150);
+        mainGridPane.getChildren().addAll(loginButton, textField1, label1);
+        loginScene = new Scene(mainGridPane, 500, 150);
         primaryStage.setScene(loginScene);
 
         disconnectButton.setText("Disconnect");
         disconnectButton.setOnAction(b -> primaryStage.setScene(loginScene));
-        gridPane2.setPadding(new Insets(5, 5, 5, 5));
-        gridPane2.setHgap(5);
+        loginGridPane.setPadding(new Insets(5, 5, 5, 5));
+        loginGridPane.setHgap(5);
         GridPane.setConstraints(disconnectButton, 1, 0);
         GridPane.setConstraints(messageInput, 1, 15);
         GridPane.setConstraints(messageTextArea, 1, 10);
         GridPane.setConstraints(userArea, 12, 10);
-        gridPane2.getChildren().addAll(disconnectButton, messageInput, messageTextArea, userArea);
-        mainScene = new Scene(gridPane2, 600, 500);
+        loginGridPane.getChildren().addAll(disconnectButton, messageInput, messageTextArea, userArea);
+        mainScene = new Scene(loginGridPane, 600, 500);
         primaryStage.show();
     }
 
